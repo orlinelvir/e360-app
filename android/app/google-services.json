@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "355923708106",
+    "project_id": "e360-app",
+    "storage_bucket": "e360-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:355923708106:android:0503a3b02ceecf05c84c33",
+        "android_client_info": {
+          "package_name": "com.mycompany.e360app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDBqbYvj0DRhLzlVXBm53i3eaEwRISCPsU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
