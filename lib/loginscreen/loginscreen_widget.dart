@@ -533,10 +533,26 @@ class _LoginscreenWidgetState extends State<LoginscreenWidget>
                                   if (user == null) {
                                     return;
                                   }
+                                  _model.adminDocGoogle =
+                                      await queryAdminsRecordOnce(
+                                    queryBuilder: (adminsRecord) =>
+                                        adminsRecord.where(
+                                      'uid',
+                                      isEqualTo: currentUserUid,
+                                    ),
+                                    singleRecord: true,
+                                  ).then((s) => s.firstOrNull);
+                                  if ((_model.adminDoc != null) == true) {
+                                    context.pushNamedAuth(
+                                        E360AdminPanelWidget.routeName,
+                                        context.mounted);
+                                  } else {
+                                    context.pushNamedAuth(
+                                        MiPortalE360Widget.routeName,
+                                        context.mounted);
+                                  }
 
-                                  context.pushNamedAuth(
-                                      MiPortalE360Widget.routeName,
-                                      context.mounted);
+                                  safeSetState(() {});
                                 },
                                 text: FFLocalizations.of(context).getText(
                                   'ingvnq79' /* Continue with Google */,

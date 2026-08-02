@@ -289,10 +289,6 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
       'es': 'RESUMEN DEL DÍA',
       'en': '',
     },
-    'cd1d54vr': {
-      'es': '1,284',
-      'en': '',
-    },
     'mg5qo9by': {
       'es': 'Brokers \nRegistrados',
       'en': '',
@@ -339,10 +335,6 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
     },
     '7dc6mbnr': {
       'es': '12 pdt actual',
-      'en': '',
-    },
-    'me5avcfm': {
-      'es': '22',
       'en': '',
     },
     '6tal0pqv': {
@@ -516,8 +508,8 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
       'es': 'Todos',
       'en': '',
     },
-    'mwcm2ujs': {
-      'es': 'All',
+    '2vpc4mid': {
+      'es': 'Todos',
       'en': '',
     },
     '833tv566': {
@@ -663,24 +655,12 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
       'es': 'Métricas del departamento.',
       'en': '',
     },
-    'ffcke4ev': {
-      'es': '16',
-      'en': '',
-    },
     '9rdopwfh': {
       'es': 'Clientes Activos',
       'en': '',
     },
-    'uvexiaah': {
-      'es': '16',
-      'en': '',
-    },
     '674haq0y': {
       'es': 'Overdue',
-      'en': '',
-    },
-    'r7w7chgk': {
-      'es': '16',
       'en': '',
     },
     '47gjty3z': {
@@ -693,194 +673,6 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
     },
     '05yfi1mp': {
       'es': 'Busca por nombre o email...',
-      'en': '',
-    },
-    'wf070o42': {
-      'es': 'Ana Lopez',
-      'en': '',
-    },
-    'n51tr36c': {
-      'es': 'Proxima disputa:',
-      'en': '',
-    },
-    'ar7shpu2': {
-      'es': 'June 6, 2026',
-      'en': '',
-    },
-    '1xszinml': {
-      'es': 'Ronda actual: ',
-      'en': '',
-    },
-    'ado0swdj': {
-      'es': 'Ronda 2',
-      'en': '',
-    },
-    '6btr14fh': {
-      'es': '(Día 25/31)',
-      'en': '',
-    },
-    'l3o6mv4u': {
-      'es': 'Puntuación Actual:',
-      'en': '',
-    },
-    'trw5x7wo': {
-      'es': 'TU:',
-      'en': '',
-    },
-    'sc58fl6v': {
-      'es': '514',
-      'en': '',
-    },
-    'etgo54va': {
-      'es': 'EX',
-      'en': '',
-    },
-    'hyn8otes': {
-      'es': '488',
-      'en': '',
-    },
-    '6453cnpd': {
-      'es': 'EQ:',
-      'en': '',
-    },
-    'tubcbcki': {
-      'es': '505',
-      'en': '',
-    },
-    'v5q4j0i4': {
-      'es': 'Días pendientes',
-      'en': '',
-    },
-    'crporgah': {
-      'es': '6',
-      'en': '',
-    },
-    'gr9xkx9f': {
-      'es': 'Actualizar Reporte',
-      'en': '',
-    },
-    'tlkv7piq': {
-      'es': 'Ver  PDF',
-      'en': '',
-    },
-    'h1izqr0t': {
-      'es': 'Samantha Chávez',
-      'en': '',
-    },
-    'r2baupr9': {
-      'es': 'Proxima disputa:',
-      'en': '',
-    },
-    'wtnnqw99': {
-      'es': 'Sin comenzar',
-      'en': '',
-    },
-    'zfmyrzag': {
-      'es': 'Ronda actual: ',
-      'en': '',
-    },
-    '7ve8o5qi': {
-      'es': 'Pendiente Ronda 1 ',
-      'en': '',
-    },
-    'pnkn7f63': {
-      'es': '(Día 0/31)',
-      'en': '',
-    },
-    'ywam0jrd': {
-      'es': 'Puntuación Actual:',
-      'en': '',
-    },
-    'ck3srwp4': {
-      'es': 'TU:',
-      'en': '',
-    },
-    'i6y1uvwn': {
-      'es': '000',
-      'en': '',
-    },
-    'l3uwp0na': {
-      'es': 'EX',
-      'en': '',
-    },
-    'blj7j0gh': {
-      'es': '000',
-      'en': '',
-    },
-    '3jv72xzh': {
-      'es': 'EQ:',
-      'en': '',
-    },
-    'zqw25nfp': {
-      'es': '000',
-      'en': '',
-    },
-    'tsf5pibw': {
-      'es': 'Comenzar Ronda',
-      'en': '',
-    },
-    'y2y5b0f5': {
-      'es': 'Hector Osorio',
-      'en': '',
-    },
-    '4manyfye': {
-      'es': 'Proxima disputa:',
-      'en': '',
-    },
-    's7v3llrj': {
-      'es': 'June 6, 2026',
-      'en': '',
-    },
-    '7vu31lji': {
-      'es': 'Ronda actual: ',
-      'en': '',
-    },
-    'huhyv7jn': {
-      'es': 'Ronda 2 ',
-      'en': '',
-    },
-    'duz2o2w2': {
-      'es': '(Día 31/31)',
-      'en': '',
-    },
-    'vqxytq30': {
-      'es': 'Puntuación Actual:',
-      'en': '',
-    },
-    'r0dzwavc': {
-      'es': 'TU:',
-      'en': '',
-    },
-    'i4caawju': {
-      'es': '514',
-      'en': '',
-    },
-    '6133xjqw': {
-      'es': 'EX',
-      'en': '',
-    },
-    'cvn7x9pq': {
-      'es': '488',
-      'en': '',
-    },
-    '1c6gi1y8': {
-      'es': 'EQ:',
-      'en': '',
-    },
-    'bdz7r38w': {
-      'es': '505',
-      'en': '',
-    },
-    '3trbs60u': {
-      'es': 'Listo para actualizar',
-      'en': '',
-    },
-    'u02m1pyl': {
-      'es': '!',
-      'en': '',
-    },
-    'd30rt4by': {
-      'es': 'Ver  PDF',
       'en': '',
     },
     'lcjvbr0y': {
@@ -2615,6 +2407,25 @@ final kTranslationsMap = <Map<String, Map<String, String>>>[
     },
     '57yi1q30': {
       'es': 'Home',
+      'en': '',
+    },
+  },
+  // CreditCaseCard
+  {
+    'ju07n049': {
+      'es': 'Próxima disputa:',
+      'en': '',
+    },
+    'dkkgm4u6': {
+      'es': 'Ronda actual: ',
+      'en': '',
+    },
+    'gyj0q80f': {
+      'es': 'Puntuación Actual:',
+      'en': '',
+    },
+    'u4drxh9d': {
+      'es': 'Ver PDF',
       'en': '',
     },
   },

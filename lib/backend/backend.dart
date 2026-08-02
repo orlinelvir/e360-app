@@ -13,6 +13,7 @@ import 'schema/e360_documents_record.dart';
 import 'schema/e360_activity_log_record.dart';
 import 'schema/brokers_record.dart';
 import 'schema/admins_record.dart';
+import 'schema/e360_credit_cases_record.dart';
 
 export 'dart:async' show StreamSubscription;
 export 'package:cloud_firestore/cloud_firestore.dart' hide Order;
@@ -29,6 +30,7 @@ export 'schema/e360_documents_record.dart';
 export 'schema/e360_activity_log_record.dart';
 export 'schema/brokers_record.dart';
 export 'schema/admins_record.dart';
+export 'schema/e360_credit_cases_record.dart';
 
 /// Functions to query E360ApplicationsRecords (as a Stream and as a Future).
 Future<int> queryE360ApplicationsRecordCount({
@@ -321,6 +323,43 @@ Future<List<AdminsRecord>> queryAdminsRecordOnce({
     queryCollectionOnce(
       AdminsRecord.collection,
       AdminsRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+/// Functions to query E360CreditCasesRecords (as a Stream and as a Future).
+Future<int> queryE360CreditCasesRecordCount({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+}) =>
+    queryCollectionCount(
+      E360CreditCasesRecord.collection,
+      queryBuilder: queryBuilder,
+      limit: limit,
+    );
+
+Stream<List<E360CreditCasesRecord>> queryE360CreditCasesRecord({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollection(
+      E360CreditCasesRecord.collection,
+      E360CreditCasesRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<List<E360CreditCasesRecord>> queryE360CreditCasesRecordOnce({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollectionOnce(
+      E360CreditCasesRecord.collection,
+      E360CreditCasesRecord.fromSnapshot,
       queryBuilder: queryBuilder,
       limit: limit,
       singleRecord: singleRecord,

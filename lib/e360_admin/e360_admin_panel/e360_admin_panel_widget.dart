@@ -3,9 +3,11 @@ import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/custom_functions.dart' as functions;
 import '/index.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'e360_admin_panel_model.dart';
 export 'e360_admin_panel_model.dart';
@@ -29,6 +31,16 @@ class _E360AdminPanelWidgetState extends State<E360AdminPanelWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => E360AdminPanelModel());
+
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      _model.loadedBrokers = await queryBrokersRecordOnce();
+      _model.brokersList = _model.loadedBrokers!.toList().cast<BrokersRecord>();
+      safeSetState(() {});
+      _model.loadedLoans = await queryE360LoansRecordOnce();
+      _model.loansList = _model.loadedLoans!.toList().cast<E360LoansRecord>();
+      safeSetState(() {});
+    });
   }
 
   @override
@@ -1367,14 +1379,16 @@ class _E360AdminPanelWidgetState extends State<E360AdminPanelWidget> {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Text(
-                                    FFLocalizations.of(context).getText(
-                                      'cd1d54vr' /* 1,284 */,
-                                    ),
+                                    functions.brokersCountText(
+                                        _model.brokersList.toList())!,
                                     style: FlutterFlowTheme.of(context)
                                         .headlineSmall
                                         .override(
                                           font: GoogleFonts.interTight(
-                                            fontWeight: FontWeight.bold,
+                                            fontWeight:
+                                                FlutterFlowTheme.of(context)
+                                                    .headlineSmall
+                                                    .fontWeight,
                                             fontStyle:
                                                 FlutterFlowTheme.of(context)
                                                     .headlineSmall
@@ -1382,9 +1396,11 @@ class _E360AdminPanelWidgetState extends State<E360AdminPanelWidget> {
                                           ),
                                           color: FlutterFlowTheme.of(context)
                                               .primaryText,
-                                          fontSize: 28.0,
                                           letterSpacing: 0.0,
-                                          fontWeight: FontWeight.bold,
+                                          fontWeight:
+                                              FlutterFlowTheme.of(context)
+                                                  .headlineSmall
+                                                  .fontWeight,
                                           fontStyle:
                                               FlutterFlowTheme.of(context)
                                                   .headlineSmall
@@ -1906,23 +1922,28 @@ en Proceso */
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
                                   Text(
-                                    FFLocalizations.of(context).getText(
-                                      'me5avcfm' /* 22 */,
-                                    ),
+                                    functions.loansCountByStatusText(
+                                        _model.loansList.toList(),
+                                        'En Revisión')!,
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .override(
                                           font: GoogleFonts.inter(
-                                            fontWeight: FontWeight.bold,
+                                            fontWeight:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMedium
+                                                    .fontWeight,
                                             fontStyle:
                                                 FlutterFlowTheme.of(context)
                                                     .bodyMedium
                                                     .fontStyle,
                                           ),
                                           color: Color(0xFFFFB600),
-                                          fontSize: 28.0,
                                           letterSpacing: 0.0,
-                                          fontWeight: FontWeight.bold,
+                                          fontWeight:
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyMedium
+                                                  .fontWeight,
                                           fontStyle:
                                               FlutterFlowTheme.of(context)
                                                   .bodyMedium
