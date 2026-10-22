@@ -7,21 +7,25 @@ import '@/global.css';
 
 import { Platform } from 'react-native';
 
+// E360 Hub es oscuro siempre (sin modo claro) — la app móvil usa la misma
+// paleta exacta del Hub web para que se sienta como la misma marca, sin
+// importar el tema del celular del broker.
+const E360_PALETTE = {
+  text: '#ffffff',
+  background: '#030812',
+  backgroundElement: '#0A182D',
+  backgroundSelected: '#05101F',
+  textSecondary: '#9CA3AF',
+  accent: '#22d3ee',
+  gold: '#d4a017',
+  danger: '#f87171',
+  success: '#34d399',
+  border: '#1f2937',
+} as const;
+
 export const Colors = {
-  light: {
-    text: '#000000',
-    background: '#ffffff',
-    backgroundElement: '#F0F0F3',
-    backgroundSelected: '#E0E1E6',
-    textSecondary: '#60646C',
-  },
-  dark: {
-    text: '#ffffff',
-    background: '#000000',
-    backgroundElement: '#212225',
-    backgroundSelected: '#2E3135',
-    textSecondary: '#B0B4BA',
-  },
+  light: E360_PALETTE,
+  dark: E360_PALETTE,
 } as const;
 
 export type ThemeColor = keyof typeof Colors.light & keyof typeof Colors.dark;
