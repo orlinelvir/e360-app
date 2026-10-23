@@ -23,6 +23,14 @@
           }
         },
         {
+          "client_id": "355923708106-tobjl848dvv63n701itjomvmsfjf4k7g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mycompany.e360app",
+            "certificate_hash": "7f7177399414fb4b283a8450ff0a9d15a387d6df"
+          }
+        },
+        {
           "client_id": "355923708106-861cc6io9c0gqvttq8a24samco7dntaj.apps.googleusercontent.com",
           "client_type": 3
         }
