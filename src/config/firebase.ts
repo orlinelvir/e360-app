@@ -23,5 +23,8 @@ export const db = getFirestore(app);
 
 // Base del Hub web para las rutas /api/admin/* (Torre de Control) — esas
 // pantallas reusan la lógica de servidor ya construida ahí en vez de
-// reimplementarla con el SDK de cliente.
-export const HUB_API_BASE_URL = process.env.EXPO_PUBLIC_HUB_API_BASE_URL || "https://emprende360.biz";
+// reimplementarla con el SDK de cliente. OJO: tiene que ser el dominio
+// exacto (con "www."), no el apex — el apex responde con un 308 a
+// www.emprende360.biz, y al seguir una redirección entre dominios distintos
+// fetch descarta el header de Authorization, provocando un 401 falso.
+export const HUB_API_BASE_URL = process.env.EXPO_PUBLIC_HUB_API_BASE_URL || "https://www.emprende360.biz";
