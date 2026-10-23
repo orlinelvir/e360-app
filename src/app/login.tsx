@@ -41,7 +41,7 @@ export default function LoginScreen() {
       await loginWithGoogle();
     } catch (err) {
       console.error('Error de login con Google:', err);
-      setError('No se pudo iniciar sesión con Google.');
+      setError(err instanceof Error ? err.message : 'No se pudo iniciar sesión con Google.');
     } finally {
       setGoogleLoading(false);
     }
@@ -72,7 +72,7 @@ export default function LoginScreen() {
         <View style={styles.container}>
           <Text style={styles.eyebrow}>E360 HUB · ACCESO EXCLUSIVO DE BROKERS</Text>
           <Text style={styles.title}>Torre de Control E360</Text>
-          <Text style={styles.subtitle}>Autenticación unificada con E360 Firebase Auth & StartPoint CRM.</Text>
+          <Text style={styles.subtitle}>Inicia sesión con tu cuenta de broker o staff de E360.</Text>
 
           <View style={styles.card}>
             <Text style={styles.label}>CORREO ELECTRÓNICO</Text>
@@ -103,7 +103,7 @@ export default function LoginScreen() {
               {loading ? (
                 <ActivityIndicator color="#000" />
               ) : (
-                <Text style={styles.buttonText}>INGRESAR CON FIREBASE</Text>
+                <Text style={styles.buttonText}>INICIAR SESIÓN</Text>
               )}
             </TouchableOpacity>
 

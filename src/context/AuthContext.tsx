@@ -9,7 +9,7 @@ import {
   User,
 } from "firebase/auth";
 import { doc, getDoc, setDoc } from "firebase/firestore";
-import { GoogleOneTapSignIn, isNoSavedCredentialFoundResponse, isSuccessResponse } from "react-native-nitro-google-signin";
+import { GoogleOneTapSignIn, isErrorWithCode, isNoSavedCredentialFoundResponse, isSuccessResponse, statusCodes } from "react-native-nitro-google-signin";
 import { auth, db } from "@/config/firebase";
 import "@/config/googleSignIn";
 
@@ -89,15 +89,35 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const loginWithGoogle = async () => {
-    let response = await GoogleOneTapSignIn.signIn();
-    if (isNoSavedCredentialFoundResponse(response)) {
-      response = await GoogleOneTapSignIn.createAccount();
+    try {
+      let response = await GoogleOneTapSignIn.signIn();
+      if (isNoSavedCredentialFoundResponse(response)) {
+        response = await GoogleOneTapSignIn.createAccount();
+      }
+      if (!isSuccessResponse(response)) {
+        throw new Error("No se pudo iniciar sesión con Google (respuesta sin éxito).");
+      }
+      const credential = GoogleAuthProvider.credential(response.data.idToken);
+      await signInWithCredential(auth, credential);
+    } catch (err) {
+      // DEVELOPER_ERROR es casi siempre SHA-1/package name mal registrado en
+      // Firebase — el mensaje genérico de antes ocultaba esto por completo.
+      if (isErrorWithCode(err)) {
+        if (err.code === statusCodes.DEVELOPER_ERROR) {
+          throw new Error(
+            "Configuración de Google incompleta: falta registrar la huella SHA-1 del build en Firebase (o no coincide el package name)."
+          );
+        }
+        if (err.code === statusCodes.SIGN_IN_CANCELLED) {
+          throw new Error("Inicio de sesión con Google cancelado.");
+        }
+        if (err.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+          throw new Error("Este dispositivo no tiene Google Play Services disponible o actualizado.");
+        }
+        throw new Error(`Error de Google Sign-In (${err.code}): ${err.message}`);
+      }
+      throw err;
     }
-    if (!isSuccessResponse(response)) {
-      throw new Error("No se pudo iniciar sesión con Google.");
-    }
-    const credential = GoogleAuthProvider.credential(response.data.idToken);
-    await signInWithCredential(auth, credential);
   };
 
   const resetPassword = async (email: string) => {
