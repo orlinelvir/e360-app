@@ -3,6 +3,7 @@ import {
   ActivityIndicator,
   FlatList,
   KeyboardAvoidingView,
+  Linking,
   Modal,
   Platform,
   ScrollView,
@@ -32,6 +33,20 @@ const FINANCING_SERVICE_IDS = new Set([
   'mortgage-loan',
 ]);
 
+// Alianza con Zein Insurance Services (ZIS) — mismo formLink que el Hub web
+// para estas 6 verticales de seguros (Seguro de Vida queda fuera, ZIS no la
+// cubre). El formulario pide el NOMBRE COMPLETO del broker (no un código) en
+// "E360 Member Referral Code" para atribuir la comisión.
+const ZIS_INSURANCE_SERVICE_IDS = new Set([
+  'auto-insurance',
+  'commercial-auto-insurance',
+  'home-insurance',
+  'business-insurance',
+  'workers-comp',
+  'health-insurance',
+]);
+const ZIS_INSURANCE_LINK = 'https://zisinsurance.com/e360/';
+
 export default function SolicitudesScreen() {
   const [pickerOpen, setPickerOpen] = useState(false);
   const [service, setService] = useState(SERVICE_OPTIONS[0]);
@@ -47,6 +62,7 @@ export default function SolicitudesScreen() {
   const [success, setSuccess] = useState('');
 
   const isFinancing = FINANCING_SERVICE_IDS.has(service.id);
+  const isInsurance = ZIS_INSURANCE_SERVICE_IDS.has(service.id);
 
   const resetForm = () => {
     setFirstName('');
@@ -109,6 +125,28 @@ export default function SolicitudesScreen() {
             <Text style={styles.pickerText}>{service.title}</Text>
             <Ionicons name="chevron-down" size={18} color={Colors.dark.textSecondary} />
           </TouchableOpacity>
+
+          {isInsurance && (
+            <View style={styles.insuranceCard}>
+              <Text style={styles.insuranceTitle}>Cotiza con Zein Insurance Services</Text>
+              <Text style={styles.insuranceText}>
+                Este servicio se cotiza en el formulario externo de ZIS, no aquí. En el campo{' '}
+                <Text style={styles.insuranceBold}>&quot;E360 Member Referral Code&quot;</Text> escribe tu{' '}
+                <Text style={styles.insuranceBold}>nombre completo como broker</Text> (no el del cliente) para
+                que se te atribuya la comisión.
+              </Text>
+              <TouchableOpacity
+                style={styles.insuranceButton}
+                onPress={() => Linking.openURL(ZIS_INSURANCE_LINK)}
+              >
+                <Text style={styles.insuranceButtonText}>Abrir formulario de Zein</Text>
+                <Ionicons name="open-outline" size={14} color={Colors.dark.accent} />
+              </TouchableOpacity>
+              <Text style={styles.insuranceSubtext}>
+                Esto solo cotiza la póliza — sigue llenando el formulario de abajo para dejar el caso registrado en el Hub.
+              </Text>
+            </View>
+          )}
 
           <View style={styles.row}>
             <View style={styles.half}>
@@ -250,6 +288,31 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   pickerText: { color: Colors.dark.text, fontSize: 13, flexShrink: 1 },
+  insuranceCard: {
+    backgroundColor: Colors.dark.backgroundElement,
+    borderWidth: 1,
+    borderColor: Colors.dark.accent,
+    borderRadius: 12,
+    padding: 14,
+    marginTop: 12,
+    gap: 8,
+  },
+  insuranceTitle: { color: Colors.dark.text, fontSize: 13, fontWeight: '700' },
+  insuranceText: { color: Colors.dark.textSecondary, fontSize: 11.5, lineHeight: 17 },
+  insuranceBold: { color: Colors.dark.text, fontWeight: '700' },
+  insuranceButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 6,
+    borderWidth: 1,
+    borderColor: Colors.dark.accent,
+    borderRadius: 10,
+    paddingVertical: 10,
+    marginTop: 2,
+  },
+  insuranceButtonText: { color: Colors.dark.accent, fontSize: 12, fontWeight: '700' },
+  insuranceSubtext: { color: Colors.dark.textSecondary, fontSize: 10, fontStyle: 'italic' },
   confirmRow: { flexDirection: 'row', alignItems: 'center', gap: 10, marginTop: 18 },
   confirmText: { color: Colors.dark.textSecondary, fontSize: 11, flex: 1 },
   error: { color: Colors.dark.danger, fontSize: 12, marginTop: 16 },
