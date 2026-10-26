@@ -42,6 +42,13 @@ export default function TabsLayout() {
         }}
       />
       <Tabs.Screen
+        name="calificador"
+        options={{
+          title: 'Calificador',
+          tabBarIcon: ({ color, size }) => <Ionicons name="speedometer" size={size} color={color} />,
+        }}
+      />
+      <Tabs.Screen
         name="admin"
         redirect={!isStaff}
         options={{
