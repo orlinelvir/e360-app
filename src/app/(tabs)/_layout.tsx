@@ -49,6 +49,20 @@ export default function TabsLayout() {
         }}
       />
       <Tabs.Screen
+        name="oficina"
+        options={{
+          title: 'Oficina Virtual',
+          tabBarIcon: ({ color, size }) => <Ionicons name="briefcase" size={size} color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="mas"
+        options={{
+          title: 'Más',
+          tabBarIcon: ({ color, size }) => <Ionicons name="ellipsis-horizontal" size={size} color={color} />,
+        }}
+      />
+      <Tabs.Screen
         name="admin"
         redirect={!isStaff}
         options={{

@@ -37,7 +37,15 @@
           "imageWidth": 76
         }
       ],
-      "react-native-nitro-google-signin"
+      "react-native-nitro-google-signin",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "E360 Hub necesita acceso a tus fotos para que puedas adjuntar documentos y reportes de crédito.",
+          "cameraPermission": "E360 Hub necesita acceso a la cámara para que puedas fotografiar documentos y reportes de crédito.",
+          "microphonePermission": false
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true,

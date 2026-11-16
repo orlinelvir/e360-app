@@ -1,27 +1,30 @@
 import { useCallback, useEffect, useState } from 'react';
-import { ActivityIndicator, FlatList, RefreshControl, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, FlatList, RefreshControl, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { collection, getDocs, orderBy, query } from 'firebase/firestore';
+import { Href, router } from 'expo-router';
+import { Ionicons } from '@expo/vector-icons';
 
 import { useAuth } from '@/context/AuthContext';
-import { db } from '@/config/firebase';
 import { Colors } from '@/constants/theme';
+import { hubFetch } from '@/lib/hubApi';
 import { deriveReviewStatus, REVIEW_STATUS_COLOR, REVIEW_STATUS_LABEL } from '@/lib/caseStatus';
 
+// Forma de GET /api/broker/clients (e360-hub-1, app/api/broker/clients/route.ts):
+// el backend ya excluye los contactos "ghl_sync" y las notas internas de staff.
 interface ClientItem {
   id: string;
   name: string;
   email?: string;
   phone?: string;
   serviceName?: string;
-  amount?: number;
+  amount?: number | string;
   estimatedCommission?: number;
   status?: string;
   createdAt?: string;
 }
 
-function formatMoney(amount?: number) {
-  return `$${(amount || 0).toLocaleString('en-US')}`;
+function formatMoney(amount?: number | string) {
+  return `$${(Number(amount) || 0).toLocaleString('en-US')}`;
 }
 
 export default function MisClientesScreen() {
@@ -35,12 +38,13 @@ export default function MisClientesScreen() {
     if (!user) return;
     setError('');
     try {
-      const q = query(collection(db, 'brokers', user.uid, 'clients'), orderBy('createdAt', 'desc'));
-      const snap = await getDocs(q);
-      setClients(snap.docs.map((d) => ({ id: d.id, ...d.data() } as ClientItem)));
+      const res = await hubFetch('/api/broker/clients');
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'No se pudieron cargar tus clientes.');
+      setClients(data.clients || []);
     } catch (err) {
       console.error('Error cargando Mis Clientes:', err);
-      setError('No se pudieron cargar tus clientes.');
+      setError(err instanceof Error ? err.message : 'No se pudieron cargar tus clientes.');
     }
   }, [user]);
 
@@ -61,8 +65,15 @@ export default function MisClientesScreen() {
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
       <View style={styles.header}>
-        <Text style={styles.title}>Mis Clientes</Text>
-        <Text style={styles.subtitle}>{clients.length} {clients.length === 1 ? 'cliente' : 'clientes'}</Text>
+        <View>
+          <Text style={styles.title}>Mis Clientes</Text>
+          <Text style={styles.subtitle}>{clients.length} {clients.length === 1 ? 'cliente' : 'clientes'}</Text>
+        </View>
+        {/* A2 (clientes-agrupado) aún no existe en los tipos de rutas generados: cast a Href. */}
+        <TouchableOpacity style={styles.groupButton} onPress={() => router.push('/clientes-agrupado' as Href)} activeOpacity={0.85}>
+          <Ionicons name="layers" size={14} color={Colors.dark.background} />
+          <Text style={styles.groupButtonText}>Ver por estado</Text>
+        </TouchableOpacity>
       </View>
 
       {loading ? (
@@ -79,7 +90,8 @@ export default function MisClientesScreen() {
           renderItem={({ item }) => {
             const reviewStatus = deriveReviewStatus(item.status);
             return (
-              <View style={styles.card}>
+              // A3 (cliente/[id]) aún no existe en los tipos de rutas generados: cast a Href.
+              <TouchableOpacity style={styles.card} activeOpacity={0.85} onPress={() => router.push(`/cliente/${item.id}` as Href)}>
                 <View style={styles.cardHeader}>
                   <Text style={styles.cardName}>{item.name || 'Sin nombre'}</Text>
                   <View style={[styles.badge, { borderColor: REVIEW_STATUS_COLOR[reviewStatus] }]}>
@@ -95,7 +107,7 @@ export default function MisClientesScreen() {
                     <Text style={styles.cardCommission}>Comisión est. {formatMoney(item.estimatedCommission)}</Text>
                   )}
                 </View>
-              </View>
+              </TouchableOpacity>
             );
           }}
         />
@@ -106,9 +118,19 @@ export default function MisClientesScreen() {
 
 const styles = StyleSheet.create({
   safeArea: { flex: 1, backgroundColor: Colors.dark.background },
-  header: { paddingHorizontal: 20, paddingTop: 12, paddingBottom: 16 },
+  header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 20, paddingTop: 12, paddingBottom: 16 },
   title: { color: Colors.dark.text, fontSize: 24, fontWeight: '800' },
   subtitle: { color: Colors.dark.textSecondary, fontSize: 12, marginTop: 2 },
+  groupButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    backgroundColor: Colors.dark.accent,
+    borderRadius: 999,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+  },
+  groupButtonText: { color: Colors.dark.background, fontSize: 11, fontWeight: '800' },
   loader: { marginTop: 40 },
   error: { color: Colors.dark.danger, textAlign: 'center', marginTop: 40, fontSize: 13 },
   empty: { color: Colors.dark.textSecondary, textAlign: 'center', marginTop: 40, fontSize: 13 },
