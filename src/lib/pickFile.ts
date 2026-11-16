@@ -9,6 +9,8 @@ export type PickedFile = {
   uri: string;
   name: string;
   type: string;
+  // Tamaño en bytes, si el sistema lo reporta (para validar límites antes de subir).
+  size?: number;
   // Solo presente si se pidió con { includeBase64: true } (ej. Revisor de
   // Crédito IA, que manda las imágenes como base64 en un body JSON).
   base64?: string;
@@ -92,6 +94,7 @@ export async function pickDocumentOrPhoto(options: PickOptions = {}): Promise<Pi
     uri: asset.uri,
     name,
     type: asset.mimeType ?? extensionToMime(name),
+    size: asset.fileSize,
   };
   if (options.includeBase64 && asset.base64) file.base64 = asset.base64;
   return file;
