@@ -39,16 +39,16 @@ function ChipSelect<T extends string>({
 }
 
 function probTier(prob: number): { bg: string; label: string } {
-  if (prob >= 75) return { bg: '#1a7a3a', label: 'Alta' };
-  if (prob >= 40) return { bg: '#d4a017', label: 'Media' };
-  if (prob > 0) return { bg: '#c0392b', label: 'Baja' };
-  return { bg: '#6a7a8a', label: 'No califica' };
+  if (prob >= 75) return { bg: Colors.dark.success, label: 'Alta' };
+  if (prob >= 40) return { bg: Colors.dark.gold, label: 'Media' };
+  if (prob > 0) return { bg: Colors.dark.danger, label: 'Baja' };
+  return { bg: Colors.dark.border, label: 'No califica' };
 }
 
 function FactorIcon({ t }: { t: 'pass' | 'warn' | 'fail' }) {
-  if (t === 'pass') return <Ionicons name="checkmark-circle" size={13} color="#34d399" />;
-  if (t === 'warn') return <Ionicons name="warning" size={13} color="#fbbf24" />;
-  return <Ionicons name="close-circle" size={13} color="#f87171" />;
+  if (t === 'pass') return <Ionicons name="checkmark-circle" size={13} color={Colors.dark.success} />;
+  if (t === 'warn') return <Ionicons name="warning" size={13} color={Colors.dark.gold} />;
+  return <Ionicons name="close-circle" size={13} color={Colors.dark.danger} />;
 }
 
 export default function CalificadorScreen() {
@@ -410,18 +410,18 @@ const styles = StyleSheet.create({
     paddingHorizontal: 14,
     paddingVertical: 12,
   },
-  productName: { color: '#fff', fontSize: 13, fontWeight: '700', flex: 1, marginRight: 8 },
+  productName: { color: Colors.dark.background, fontSize: 13, fontWeight: '700', flex: 1, marginRight: 8 },
   productProbWrap: { alignItems: 'flex-end' },
-  productProb: { color: '#f5c842', fontSize: 20, fontWeight: '900' },
-  productProbLabel: { color: 'rgba(255,255,255,0.5)', fontSize: 8, letterSpacing: 1 },
+  productProb: { color: Colors.dark.background, fontSize: 20, fontWeight: '900' },
+  productProbLabel: { color: Colors.dark.background, fontSize: 8, letterSpacing: 1 },
   productBody: { padding: 14 },
   barBg: { height: 6, backgroundColor: Colors.dark.backgroundSelected, borderRadius: 4, overflow: 'hidden', marginBottom: 10 },
   barFill: { height: '100%', borderRadius: 4 },
   amountLabel: { color: Colors.dark.textSecondary, fontSize: 9, fontWeight: '700', letterSpacing: 1 },
   amountValue: { color: Colors.dark.text, fontSize: 18, fontWeight: '900', marginBottom: 10 },
-  avatarBox: { backgroundColor: 'rgba(96,165,250,0.1)', borderRadius: 8, padding: 10, marginBottom: 10 },
-  avatarLabel: { color: '#60a5fa', fontSize: 9, fontWeight: '700', letterSpacing: 1, marginBottom: 3 },
-  avatarText: { color: '#93c5fd', fontSize: 11, lineHeight: 16 },
+  avatarBox: { backgroundColor: Colors.dark.backgroundSelected, borderRadius: 8, padding: 10, marginBottom: 10 },
+  avatarLabel: { color: Colors.dark.accent, fontSize: 9, fontWeight: '700', letterSpacing: 1, marginBottom: 3 },
+  avatarText: { color: Colors.dark.text, fontSize: 11, lineHeight: 16 },
   factorsList: { gap: 5, marginBottom: 10 },
   factorRow: { flexDirection: 'row', alignItems: 'flex-start', gap: 6 },
   factorText: { color: Colors.dark.textSecondary, fontSize: 11, flex: 1, lineHeight: 15 },
