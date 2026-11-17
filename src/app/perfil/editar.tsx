@@ -18,7 +18,23 @@ import { Ionicons } from '@expo/vector-icons';
 import { useAuth } from '@/context/AuthContext';
 import { Colors } from '@/constants/theme';
 import { hubFetch } from '@/lib/hubApi';
-import type { BrokerProfileData } from './index';
+
+interface BrokerProfileData {
+  uid: string;
+  displayName?: string;
+  name?: string;
+  email: string;
+  phone?: string;
+  whatsapp?: string;
+  businessName?: string;
+  city?: string;
+  state?: string;
+  nmlsId?: string;
+  licenseNumber?: string;
+  bio?: string;
+  specialties?: string[];
+  referralSlug?: string;
+}
 
 type ProfileForm = {
   displayName: string;

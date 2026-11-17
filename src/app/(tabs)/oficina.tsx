@@ -14,24 +14,9 @@ import { Ionicons } from '@expo/vector-icons';
 
 import { Colors } from '@/constants/theme';
 import { hubFetch } from '@/lib/hubApi';
+import { isTaxOfficePaywall, TaxOfficeUpsellView } from '@/components/tax-office-upsell';
 
 type IconName = ComponentProps<typeof Ionicons>['name'];
-
-export function isTaxOfficePaywall(status: number, errorMessage?: string): boolean {
-  return status === 403 && Boolean(errorMessage && errorMessage.includes('Oficina Virtual E360 no está activa'));
-}
-
-export function TaxOfficeUpsellView() {
-  return (
-    <View style={styles.upsellBox}>
-      <View style={styles.upsellIconWrap}>
-        <Ionicons name="lock-closed" size={32} color={Colors.dark.gold} />
-      </View>
-      <Text style={styles.upsellTitle}>Oficina Virtual E360</Text>
-      <Text style={styles.upsellText}>Esta función requiere Oficina Virtual E360 activa</Text>
-    </View>
-  );
-}
 
 interface OficinaMenuItem {
   title: string;
@@ -160,24 +145,4 @@ const styles = StyleSheet.create({
   cardBody: { flex: 1 },
   cardTitle: { color: Colors.dark.text, fontSize: 14, fontWeight: '700' },
   cardDescription: { color: Colors.dark.textSecondary, fontSize: 12, marginTop: 2 },
-  upsellBox: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: 32,
-    gap: 10,
-  },
-  upsellIconWrap: {
-    width: 64,
-    height: 64,
-    borderRadius: 20,
-    backgroundColor: Colors.dark.backgroundElement,
-    borderWidth: 1,
-    borderColor: Colors.dark.gold,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 4,
-  },
-  upsellTitle: { color: Colors.dark.text, fontSize: 20, fontWeight: '800', textAlign: 'center' },
-  upsellText: { color: Colors.dark.textSecondary, fontSize: 13, textAlign: 'center', lineHeight: 19 },
 });

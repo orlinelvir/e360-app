@@ -17,43 +17,6 @@ import { PickedFile, pickDocumentOrPhoto } from '@/lib/pickFile';
 
 const MAX_IMAGES = 70;
 
-export interface CreditReportScore {
-  buro: string;
-  score: number | null;
-}
-
-export interface CreditReportIssue {
-  prioridad?: number;
-  tipo: string;
-  es_negativo: boolean;
-  acreedor: string | null;
-  cuenta_ultimos4: string | null;
-  buros: string[];
-  detalle: string | null;
-  impacto?: string;
-  disputable?: string;
-  motivo?: string | null;
-  accion?: string | null;
-}
-
-export interface CreditReportAnalysis {
-  scores: CreditReportScore[];
-  nivel_general?: string;
-  resumen_para_el_broker: string;
-  problemas: CreditReportIssue[];
-}
-
-export interface CreditReportResultPayload {
-  analysis: CreditReportAnalysis;
-  notes: string[];
-}
-
-let lastAnalysisResult: CreditReportResultPayload | null = null;
-
-export function getLastCreditAnalysisResult(): CreditReportResultPayload | null {
-  return lastAnalysisResult;
-}
-
 export default function RevisorCreditoScreen() {
   const [pages, setPages] = useState<PickedFile[]>([]);
   const [submitting, setSubmitting] = useState(false);
@@ -132,11 +95,11 @@ export default function RevisorCreditoScreen() {
         throw new Error(data.error || 'No se pudo analizar el reporte.');
       }
 
-      lastAnalysisResult = {
-        analysis: data.analysis as CreditReportAnalysis,
+      const payload = JSON.stringify({
+        analysis: data.analysis,
         notes: Array.isArray(data.notes) ? data.notes : [],
-      };
-      router.push('/revisor/resultado' as Href);
+      });
+      router.push({ pathname: '/revisor/resultado', params: { payload } } as unknown as Href);
     } catch (err) {
       console.error('Error analizando reporte de crédito:', err);
       setError(err instanceof Error ? err.message : 'Error desconocido al analizar el reporte.');

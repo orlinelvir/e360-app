@@ -1,4 +1,4 @@
-import { Alert, Linking } from "react-native";
+import { Alert, Linking, Platform } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 
 // Selector compartido de foto/documento (T1-4 del roadmap). Todas las
@@ -24,6 +24,7 @@ type Source = "camera" | "library";
 
 // Resuelve al origen elegido, o null si el usuario cancela el diálogo.
 function askSource(): Promise<Source | null> {
+  if (Platform.OS === "web") return Promise.resolve("library");
   return new Promise((resolve) => {
     Alert.alert(
       "Agregar archivo",

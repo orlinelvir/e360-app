@@ -19,7 +19,7 @@ import { Ionicons } from '@expo/vector-icons';
 
 import { Colors } from '@/constants/theme';
 import { hubFetch } from '@/lib/hubApi';
-import { isTaxOfficePaywall, TaxOfficeUpsellView } from '@/app/(tabs)/oficina';
+import { isTaxOfficePaywall, TaxOfficeUpsellView } from '@/components/tax-office-upsell';
 
 type TaxInvoiceStatus = 'draft' | 'sent' | 'paid' | 'failed' | 'refunded' | 'cancelled';
 type TaxPaymentMethod = 'refund_deduction' | 'card' | 'zelle' | 'cash';

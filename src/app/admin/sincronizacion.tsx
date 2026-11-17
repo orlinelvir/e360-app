@@ -104,12 +104,14 @@ export default function AdminSincronizacionScreen() {
         </View>
       </View>
 
-      {!!error && <Text style={styles.errorBanner}>{error}</Text>}
-
       {loading ? (
         <ActivityIndicator style={styles.loader} color={Colors.dark.accent} />
+      ) : error && leads.length === 0 ? (
+        <Text style={styles.errorBanner}>{error}</Text>
       ) : (
-        <FlatList
+        <>
+          {!!error && <Text style={styles.errorBanner}>{error}</Text>}
+          <FlatList
           data={leads}
           keyExtractor={(item) => `${item.brokerId}-${item.id}`}
           contentContainerStyle={styles.listContent}
@@ -151,6 +153,7 @@ export default function AdminSincronizacionScreen() {
             );
           }}
         />
+        </>
       )}
     </SafeAreaView>
   );

@@ -16,7 +16,7 @@ import { useAuth } from '@/context/AuthContext';
 import { Colors } from '@/constants/theme';
 import { hubFetch } from '@/lib/hubApi';
 
-export interface BrokerProfileData {
+interface BrokerProfileData {
   uid: string;
   displayName?: string;
   name?: string;
@@ -111,7 +111,7 @@ export default function MiPerfilScreen() {
                 </View>
                 <Text style={styles.heroName}>{displayName}</Text>
                 <Text style={styles.heroEmail}>{profile.email || user?.email || ''}</Text>
-                {!!locationText && <Text style={styles.heroLocation}>{locationText}</Text>}
+                <Text style={styles.heroLocation}>{locationText || 'Ciudad / Estado sin especificar'}</Text>
               </View>
             </View>
 

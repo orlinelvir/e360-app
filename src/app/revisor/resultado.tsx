@@ -1,13 +1,58 @@
+import { useMemo } from 'react';
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { router } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 
 import { Colors } from '@/constants/theme';
-import { getLastCreditAnalysisResult } from './index';
+
+interface CreditReportScore {
+  buro: string;
+  score: number | null;
+}
+
+interface CreditReportIssue {
+  prioridad?: number;
+  tipo: string;
+  es_negativo: boolean;
+  acreedor: string | null;
+  cuenta_ultimos4: string | null;
+  buros: string[];
+  detalle: string | null;
+  impacto?: string;
+  disputable?: string;
+  motivo?: string | null;
+  accion?: string | null;
+}
+
+interface CreditReportAnalysis {
+  scores: CreditReportScore[];
+  nivel_general?: string;
+  resumen_para_el_broker: string;
+  problemas: CreditReportIssue[];
+}
+
+interface CreditReportResultPayload {
+  analysis: CreditReportAnalysis;
+  notes: string[];
+}
 
 export default function RevisorResultadoScreen() {
-  const result = getLastCreditAnalysisResult();
+  const { payload } = useLocalSearchParams<{ payload?: string }>();
+
+  const result = useMemo<CreditReportResultPayload | null>(() => {
+    if (!payload) return null;
+    try {
+      const parsed = JSON.parse(payload);
+      if (!parsed || !parsed.analysis) return null;
+      return {
+        analysis: parsed.analysis as CreditReportAnalysis,
+        notes: Array.isArray(parsed.notes) ? parsed.notes : [],
+      };
+    } catch {
+      return null;
+    }
+  }, [payload]);
 
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
