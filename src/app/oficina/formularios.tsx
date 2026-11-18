@@ -4,7 +4,6 @@ import {
   Alert,
   FlatList,
   RefreshControl,
-  Share,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -13,6 +12,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
+import * as Clipboard from 'expo-clipboard';
 
 import { Colors } from '@/constants/theme';
 import { hubFetch } from '@/lib/hubApi';
@@ -68,14 +68,10 @@ export default function OficinaFormulariosScreen() {
   const handleCopyPublicLink = async (token: string) => {
     const url = `https://www.emprende360.biz/tax-forms/${token}`;
     try {
-      if (typeof navigator !== 'undefined' && navigator.clipboard?.writeText) {
-        await navigator.clipboard.writeText(url);
-        Alert.alert('Enlace copiado', url);
-        return;
-      }
-      await Share.share({ message: url, url });
+      await Clipboard.setStringAsync(url);
+      Alert.alert('Enlace copiado', url);
     } catch (err) {
-      console.error('Error compartiendo enlace público:', err);
+      console.error('Error copiando enlace público:', err);
       Alert.alert('Enlace público', url);
     }
   };
